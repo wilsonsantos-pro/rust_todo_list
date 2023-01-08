@@ -9,6 +9,8 @@ pub struct Cli {
 #[derive(Subcommand)]
 pub enum Action {
     Add(AddCommand),
+    Done(DoneCommand),
+    Undone(DoneCommand),
     Init,
     List,
 }
@@ -16,4 +18,9 @@ pub enum Action {
 #[derive(Debug, Args)]
 pub struct AddCommand {
     pub title: String,
+}
+
+#[derive(Debug, Args)]
+pub struct DoneCommand {
+    pub id: i32,
 }
