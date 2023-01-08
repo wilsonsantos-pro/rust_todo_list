@@ -1,8 +1,10 @@
 use crate::cli::AddCommand;
-use chrono::{DateTime, Local, Utc};
 
+use chrono::{DateTime, Local, Utc};
 use colored::*;
+use dirs::config_dir;
 use rusqlite::{params, Connection, Result};
+use std::{fs, path::PathBuf};
 
 #[derive(Debug)]
 struct Task {
@@ -12,10 +14,22 @@ struct Task {
     done: bool,
 }
 
+fn db_path() -> PathBuf {
+    config_dir().unwrap().join("rust_todo_list/tasks.db")
+}
+
+fn db_conn() -> Result<Connection> {
+    Connection::open(db_path())
+}
+
 pub fn init() -> Result<()> {
     println!("init");
 
-    let conn = Connection::open("tasks.db")?;
+    // create path if doesn't exist
+    let db_path = db_path();
+    fs::create_dir_all(db_path.parent().unwrap()).unwrap();
+
+    let conn = db_conn()?;
 
     conn.execute(
         "CREATE TABLE IF NOT EXISTS tasks (
@@ -33,7 +47,7 @@ pub fn init() -> Result<()> {
 pub fn add_task(task: AddCommand) -> Result<()> {
     println!("Adding task \"{}\"", task.title);
 
-    let conn = Connection::open("tasks.db")?;
+    let conn = db_conn()?;
 
     let local_time = Local::now();
     let utc_time = DateTime::<Utc>::from_utc(local_time.naive_utc(), Utc);
@@ -47,7 +61,7 @@ pub fn add_task(task: AddCommand) -> Result<()> {
 }
 
 pub fn mark_as_done(task_id: i32, done: bool) -> Result<()> {
-    let conn = Connection::open("tasks.db")?;
+    let conn = db_conn()?;
 
     conn.execute(
         "update tasks set done = (?1) where id = (?2)",
@@ -58,7 +72,7 @@ pub fn mark_as_done(task_id: i32, done: bool) -> Result<()> {
 }
 
 pub fn list_tasks() -> Result<()> {
-    let conn = Connection::open("tasks.db")?;
+    let conn = db_conn()?;
 
     let mut stmt = conn.prepare("SELECT t.id, t.title, t.created, t.done FROM tasks t")?;
 
@@ -71,7 +85,12 @@ pub fn list_tasks() -> Result<()> {
         })
     })?;
 
-    println!("{:4} | {:40} | {}", "id", "created", "title");
+    println!(
+        "{:4} | {:40} | {}",
+        "Id".bold(),
+        "Created".bold(),
+        "Title".bold()
+    );
     println!("{:4} | {:40} | {}", "-".repeat(4), "-".repeat(40), "-----");
     for task in tasks {
         let task = task.unwrap();
