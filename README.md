@@ -20,5 +20,8 @@ cargo run -- undone 2 # mark task with id 2 as undone
 - [ ] Document the CLI options
 
 ### Dev tasks:
+
 - [ ] Add unit tests
 - [ ] Refactor database related stuff from `tasks.rs` to `db.rs`
+- [ ] Handle non-existing database
+- [ ] Use [Diesel](https://diesel.rs/) as ORM

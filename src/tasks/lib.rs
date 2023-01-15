@@ -1,5 +1,3 @@
-use crate::cli::AddCommand;
-
 use chrono::{DateTime, Local, Utc};
 use colored::*;
 use dirs::config_dir;
@@ -44,8 +42,8 @@ pub fn init() -> Result<()> {
     Ok(())
 }
 
-pub fn add_task(task: AddCommand) -> Result<()> {
-    println!("Adding task \"{}\"", task.title);
+pub fn add_task(task_title: String) -> Result<()> {
+    println!("Adding task \"{}\"", task_title);
 
     let conn = db_conn()?;
 
@@ -54,7 +52,7 @@ pub fn add_task(task: AddCommand) -> Result<()> {
 
     conn.execute(
         "INSERT INTO tasks (created, title) VALUES (?1, ?2)",
-        params![utc_time, task.title],
+        params![utc_time, task_title],
     )?;
 
     Ok(())

@@ -1,5 +1,4 @@
 mod cli;
-mod tasks;
 
 use cli::Action;
 use cli::Cli;
@@ -16,7 +15,7 @@ fn main() -> Result<(), Error> {
             Ok(_) => Ok(()),
             Err(e) => Err(e),
         },
-        Action::Add(task) => match add_task(task) {
+        Action::Add(task) => match add_task(task.title) {
             Ok(_) => Ok(()),
             Err(e) => Err(e),
         },
