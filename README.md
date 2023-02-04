@@ -22,6 +22,6 @@ cargo run -- undone 2 # mark task with id 2 as undone
 ### Dev tasks:
 
 - [ ] Add unit tests
-- [ ] Refactor database related stuff from `lib.rs` to `crud.rs`
+- [x] Refactor database related stuff from `lib.rs` to `crud.rs`
 - [ ] Handle non-existing database
 - [ ] Use [Diesel](https://diesel.rs/) as ORM
