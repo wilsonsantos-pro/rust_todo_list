@@ -8,20 +8,33 @@ cargo run -- done 1 # mark task with id 1 as done
 cargo run -- undone 2 # mark task with id 2 as undone
 ```
 
-## TODO
-
-### Upcoming features:
+## Available features
 
 - [x] Add task
 - [x] List tasks
 - [x] Mark tasks as done/undone
-- [x] Store db in user's dir
+
+## Upcoming features
+
+- [ ] Delete task
+- [ ] Sort task by done, created
+- [ ] Bulk operations:
+  - [ ] Delete list: `delete 1,2,3`
+  - [ ] Delete range: `delete 1..3`
+  - [ ] Mark done list: `done 1,2,3`
+  - [ ] Mark done range: `done 1..3`
+  - [ ] Mark undone list: `undone 1,2,3`
+  - [ ] Mark undone range: `undone 1..3`
+- [ ] Edit title
+- [ ] Add due date
+- [ ] Sort by due date
 - [ ] Support for ".env" files
 - [ ] Document the CLI options
 
-### Dev tasks:
+## TODO: Dev tasks
 
-- [ ] Add unit tests
+- [x] Store db in user's dir
 - [x] Refactor database related stuff from `lib.rs` to `crud.rs`
+- [ ] Add unit tests
 - [ ] Handle non-existing database
 - [ ] Use [Diesel](https://diesel.rs/) as ORM
