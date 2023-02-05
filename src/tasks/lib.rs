@@ -14,6 +14,18 @@ pub fn add_task(task_title: String) -> Result<()> {
     return crud::create_task(task_title);
 }
 
+pub fn delete_task(task_id: i32) -> Result<()> {
+    let result = crud::delete_task(task_id);
+    match result {
+        Ok(fc) => {
+            println!("Deleted task \"{}\"", task_id);
+            fc
+        }
+        Err(e) => panic!("Error deleting the task {:?}", e),
+    }
+    return result;
+}
+
 pub fn mark_as_done(task_id: i32, done: bool) -> Result<()> {
     return crud::mark_as_done(task_id, done);
 }

@@ -9,6 +9,7 @@ pub struct Cli {
 #[derive(Subcommand)]
 pub enum Action {
     Add(AddCommand),
+    Delete(DeleteCommand),
     Done(DoneCommand),
     Undone(DoneCommand),
     Init,
@@ -18,6 +19,11 @@ pub enum Action {
 #[derive(Debug, Args)]
 pub struct AddCommand {
     pub title: String,
+}
+
+#[derive(Debug, Args)]
+pub struct DeleteCommand {
+    pub id: i32,
 }
 
 #[derive(Debug, Args)]

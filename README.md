@@ -13,10 +13,10 @@ cargo run -- undone 2 # mark task with id 2 as undone
 - [x] Add task
 - [x] List tasks
 - [x] Mark tasks as done/undone
+- [x] Delete task (0.2.0)
 
 ## Upcoming features
 
-- [ ] Delete task
 - [ ] Sort task by done, created
 - [ ] Bulk operations:
   - [ ] Delete list: `delete 1,2,3`

@@ -46,6 +46,14 @@ pub fn create_task(task_title: String) -> Result<()> {
     Ok(())
 }
 
+pub fn delete_task(task_id: i32) -> Result<()> {
+    let conn = db_conn()?;
+
+    conn.execute("delete from tasks where id = (?1)", params![task_id])?;
+
+    Ok(())
+}
+
 pub fn mark_as_done(task_id: i32, done: bool) -> Result<()> {
     let conn = db_conn()?;
 

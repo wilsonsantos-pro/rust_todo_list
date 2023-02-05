@@ -3,7 +3,7 @@ mod cli;
 use cli::Action;
 use cli::Cli;
 
-use tasks::{add_task, init, list_tasks, mark_as_done};
+use tasks::{add_task, delete_task, init, list_tasks, mark_as_done};
 
 use clap::Parser;
 use rusqlite::{Error, Result};
@@ -16,6 +16,10 @@ fn main() -> Result<(), Error> {
             Err(e) => Err(e),
         },
         Action::Add(task) => match add_task(task.title) {
+            Ok(_) => Ok(()),
+            Err(e) => Err(e),
+        },
+        Action::Delete(task) => match delete_task(task.id) {
             Ok(_) => Ok(()),
             Err(e) => Err(e),
         },
